@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/btmadison/go/vehicle/pkg/crud"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
 )
 
 // Post handler creates a new item

@@ -3,7 +3,7 @@ package inmem
 import (
 	"errors"
 
-	"github.com/btmadison/go/vehicle/pkg/crud"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
 )
 
 type Repository struct {

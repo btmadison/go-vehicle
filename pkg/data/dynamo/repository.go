@@ -1,7 +1,7 @@
 package dynamo
 
 import (
-	"github.com/btmadison/go/vehicle/pkg/crud"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
 )
 
 type Repository struct {

@@ -6,7 +6,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/btmadison/go/vehicle/pkg/crud"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
 )
 
 var svc crud.Service

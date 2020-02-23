@@ -1,4 +1,4 @@
-module github.com/btmadison/go/vehicle
+module github.com/btmadison/btmadison/go-vehicle
 
 go 1.13
 

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/btmadison/go/vehicle/pkg/crud"
-	"github.com/btmadison/go/vehicle/pkg/data/dynamo"
-	"github.com/btmadison/go/vehicle/pkg/data/inmem"
-	"github.com/btmadison/go/vehicle/pkg/http/rest"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/data/dynamo"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/data/inmem"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/http/rest"
 )
 
 const (
