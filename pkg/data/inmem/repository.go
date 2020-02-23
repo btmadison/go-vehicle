@@ -54,7 +54,7 @@ func populateSeedData(store *Repository) {
 	store.vehicleMap["5e4ef1ad40e8ab28f6e75138"] = crud.Vehicle{
 		Vin:        "5e4ef1ad40e8ab28f6e75138",
 		Make:       "Acura",
-		Model:      "Farger",
+		Model:      "MDX",
 		Year:       1969,
 		Dealership: "Rent-A-Wreck",
 	}

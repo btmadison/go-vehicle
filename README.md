@@ -5,4 +5,6 @@ General Hexagonal Architecture with DI set up to swap between in memory and dyna
 Basic rest crud operations on a list of vehicles
 
 main driver is in the cmd folder
+- cmd/aws placeholder to use sls / serverless funcs aws
+- cmd/server - can switch between in memory or direct dynamo access without serverless - set option in main.go switch
 everything else lives in pkg

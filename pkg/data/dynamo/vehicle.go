@@ -1,10 +1,12 @@
 package dynamo
 
-// Vehicle model to use with dynamo if needed or remove this
 type Vehicle struct {
-	Vin        string
-	Make       string
-	Model      string
-	Year       int
-	Dealership string
+	pk         string
+	sk         string
+	dealership string
+	make       string
+	milage     int
+	model      string
+	year       int
+	note       string
 }

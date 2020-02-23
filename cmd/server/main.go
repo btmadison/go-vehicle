@@ -15,7 +15,7 @@ const (
 func main() {
 	var svc crud.Service
 
-	switch db := INMEM; db {
+	switch db := DYNAMO; db {
 	case DYNAMO:
 		repo := dynamo.NewRepository()
 		svc = crud.NewService(repo)
