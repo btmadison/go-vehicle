@@ -8,7 +8,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Put handler updates existing item
 func put(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	if r.Method == http.MethodOptions {

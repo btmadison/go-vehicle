@@ -12,6 +12,7 @@ type Vehicle struct {
 	Dealership string
 }
 
+// ToCrudVehicle converts a dynamo Vehicle response to a CRUD Vehicle
 func (v Vehicle) ToCrudVehicle() crud.Vehicle {
 	return crud.Vehicle{
 		Vin:        v.Pk,

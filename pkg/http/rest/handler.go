@@ -11,6 +11,11 @@ import (
 
 var svc crud.Service
 
+/*
+ServeRoutes serves the following routes as a single localhost api:
+/vehicles....
+blah blah blah
+*/
 func ServeRoutes(vehicleSvc crud.Service) {
 	svc = vehicleSvc
 	router := mux.NewRouter()

@@ -7,7 +7,6 @@ import (
 	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
 )
 
-// Post handler creates a new item
 func post(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	if r.Method == http.MethodOptions {

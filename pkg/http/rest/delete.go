@@ -6,7 +6,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Delete handler deletes a single item by id
 func delete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	if r.Method == http.MethodOptions {
