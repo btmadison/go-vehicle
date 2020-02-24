@@ -1,10 +1,13 @@
 package main
 
 import (
+	"log"
+
 	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
 	"github.com/btmadison/btmadison/go-vehicle/pkg/data/dynamo"
 	"github.com/btmadison/btmadison/go-vehicle/pkg/data/inmem"
 	"github.com/btmadison/btmadison/go-vehicle/pkg/http/rest"
+	"github.com/joho/godotenv"
 )
 
 const (
@@ -13,6 +16,10 @@ const (
 )
 
 func main() {
+	err := godotenv.Load("local.env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
 	var svc crud.Service
 
 	switch db := DYNAMO; db {
