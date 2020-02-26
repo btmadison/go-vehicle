@@ -7,4 +7,5 @@ require (
 	github.com/aws/aws-sdk-go v1.29.8
 	github.com/gorilla/mux v1.7.4
 	github.com/joho/godotenv v1.3.0
+	golang.org/x/tools/gopls v0.3.2 // indirect
 )

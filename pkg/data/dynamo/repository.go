@@ -23,21 +23,27 @@ type Repository struct {
 // NewRepository initializes a new dynamodb govehicle repository
 func NewRepository() *Repository {
 	store := new(Repository)
-	store.tableName = "govehicles"
+	store.tableName = "go-restapi-demo-dev"
 	store.metaKey = "metadata"
 	store.region = os.Getenv("region")
 	return store
 }
 
 // GetAllVehicles gets all vehicles
-func (m *Repository) GetAllVehicles() []crud.Vehicle {
+func (m *Repository) GetAllVehicles() ([]crud.Vehicle, error) {
 	dyn := newDynSession(m)
+	fmt.Println(dyn)
 
 	params := &dynamodb.ScanInput{
 		TableName: aws.String(m.tableName),
 	}
+	fmt.Println(params)
 
-	result, _ := dyn.Scan(params)
+	result, err := dyn.Scan(params)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(result)
 
 	return mapResultsToVehicles(result.Items)
 }
@@ -94,17 +100,18 @@ func newDynSession(m *Repository) *dynamodb.DynamoDB {
 	return dynamodb.New(sess)
 }
 
-func mapResultsToVehicles(items []map[string]*dynamodb.AttributeValue) []crud.Vehicle {
+func mapResultsToVehicles(items []map[string]*dynamodb.AttributeValue) ([]crud.Vehicle, error) {
 	vehicles := []crud.Vehicle{}
 	for _, item := range items {
 		v := Vehicle{}
 		err := dynamodbattribute.UnmarshalMap(item, &v)
 		if err != nil {
 			fmt.Println(err)
+			return nil, err
 		} else if v.Sk == "metadata" {
 			cv := v.ToCrudVehicle()
 			vehicles = append(vehicles, cv)
 		}
 	}
-	return vehicles
+	return vehicles, nil
 }

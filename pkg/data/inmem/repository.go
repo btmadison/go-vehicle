@@ -6,6 +6,7 @@ import (
 	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
 )
 
+// Repository impl for the in memory db
 type Repository struct {
 	vehicleMap map[string]crud.Vehicle
 }
@@ -17,14 +18,14 @@ func NewRepository() *Repository {
 	return store
 }
 
-// GetAll gets all vehicles from the inmem repo
-func (m *Repository) GetAllVehicles() []crud.Vehicle {
+// GetAllVehicles gets all vehicles from the inmem repo
+func (m *Repository) GetAllVehicles() ([]crud.Vehicle, error) {
 	vehicles := []crud.Vehicle{}
 	for _, value := range m.vehicleMap {
 		vehicles = append(vehicles, value)
 	}
 
-	return vehicles
+	return vehicles, nil
 }
 
 // GetOneByID returns vehicle with given VIN number from the inmem repo

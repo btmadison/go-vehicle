@@ -2,16 +2,18 @@ package crud
 
 import "errors"
 
+// Repository is injected into the service to provide data access that corresponds to the service crud functionality
 type Repository interface {
-	GetAllVehicles() []Vehicle
+	GetAllVehicles() ([]Vehicle, error)
 	GetOneByID(vin string) (Vehicle, error)
 	Delete(vin string)
 	Upsert(vehicle Vehicle)
 }
 
+// Service defines the methods for vehicle crud access
 type Service interface {
 	Create(vehicle Vehicle) (Vehicle, error)
-	ReadAll() []Vehicle
+	ReadAll() ([]Vehicle, error)
 	ReadOneByID(vin string) (Vehicle, error)
 	Update(vin string, vehicle Vehicle) (Vehicle, error)
 	Delete(vin string) error
@@ -21,11 +23,12 @@ type service struct {
 	repo Repository
 }
 
+// NewService creats a new service with injected repository
 func NewService(r Repository) Service {
 	return &service{r}
 }
 
-func (svc service) ReadAll() []Vehicle {
+func (svc service) ReadAll() ([]Vehicle, error) {
 	return svc.repo.GetAllVehicles()
 }
 

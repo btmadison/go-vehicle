@@ -11,7 +11,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	vehicles := svc.ReadAll()
+	vehicles, _ := svc.ReadAll()
 	vehiclesJSON, _ := json.Marshal(vehicles)
 	w.Write(vehiclesJSON)
 }

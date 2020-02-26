@@ -7,6 +7,8 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/data/dynamo"
 )
 
 // Response is of type APIGatewayProxyResponse since we're leveraging the
@@ -17,10 +19,20 @@ type Response events.APIGatewayProxyResponse
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context) (Response, error) {
+	repo := dynamo.NewRepository()
+	svc := crud.NewService(repo)
+
+	vehicles, err := svc.ReadAll()
+	if err != nil {
+		return Response{StatusCode: 404}, err
+	}
+
+	vehiclesJSON, _ := json.Marshal(vehicles)
 	var buf bytes.Buffer
 
 	body, err := json.Marshal(map[string]interface{}{
-		"message": "Go Serverless v1.0! Your function executed successfully!",
+		"message": "Got Vehicles",
+		"data":    vehiclesJSON,
 	})
 	if err != nil {
 		return Response{StatusCode: 404}, err
