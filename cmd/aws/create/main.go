@@ -2,25 +2,30 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
+	"github.com/btmadison/btmadison/go-vehicle/pkg/data/dynamo"
 )
 
 type response events.APIGatewayProxyResponse
 
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (response, error) {
-	// repo := dynamo.NewRepository()
-	// svc := crud.NewService(repo)
+	repo := dynamo.NewRepository()
+	svc := crud.NewService(repo)
 
-	vehicle := request.Body
-	fmt.Printf(vehicle)
+	body := []byte(request.Body)
+	var v crud.Vehicle
 
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return response{StatusCode: 404}, err
-	// }
+	err := json.Unmarshal(body, &v)
+	if err != nil {
+		fmt.Println(err)
+		return response{StatusCode: 404}, err
+	}
+	svc.Create(v)
 
 	return response{StatusCode: 200}, nil
 }
