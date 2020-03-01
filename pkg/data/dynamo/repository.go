@@ -82,11 +82,38 @@ func (m *Repository) GetOneByID(vin string) (crud.Vehicle, error) {
 }
 
 // Upsert will Insert or Update existing Vehicle based on globally unique VIN#
-func (m *Repository) Upsert(v crud.Vehicle) {
+func (m *Repository) Upsert(v crud.Vehicle) error {
+	dyn := newDynSession(m)
+	dynVehicle := Vehicle{
+		Pk:         v.Vin,
+		Sk:         "metadata",
+		Dealership: v.Dealership,
+		Make:       v.Make,
+		Model:      v.Model,
+		Year:       v.Year,
+	}
+	av, _ := dynamodbattribute.MarshalMap(dynVehicle)
+	fmt.Println(av)
+
+	input := &dynamodb.PutItemInput{
+		Item:      av,
+		TableName: aws.String(m.tableName),
+	}
+	_, err := dyn.PutItem(input)
+
+	if err != nil {
+		fmt.Println("Got error calling PutItem")
+		fmt.Println(err.Error())
+		return err
+	}
+
+	return nil
+
 }
 
 // Delete vehicle from in memory inventory
-func (m *Repository) Delete(vin string) {
+func (m *Repository) Delete(vin string) error {
+	return nil
 }
 
 func newDynSession(m *Repository) *dynamodb.DynamoDB {

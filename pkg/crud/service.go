@@ -6,8 +6,8 @@ import "errors"
 type Repository interface {
 	GetAllVehicles() ([]Vehicle, error)
 	GetOneByID(vin string) (Vehicle, error)
-	Delete(vin string)
-	Upsert(vehicle Vehicle)
+	Delete(vin string) error
+	Upsert(vehicle Vehicle) error
 }
 
 // Service defines the methods for vehicle crud access

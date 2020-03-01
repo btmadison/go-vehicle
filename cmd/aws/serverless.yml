@@ -1,6 +1,9 @@
 service: go-restapi-demo
 frameworkVersion: '>=1.28.0 <2.0.0'
 
+plugins:
+  - serverless-dynamodb-local
+
 provider:
   name: aws
   runtime: go1.x
@@ -24,12 +27,50 @@ package:
     - ./bin/**
 
 functions:
+  get:
+    handler: bin/get
+    events:
+      - http:
+          path: vehicles/{vin}
+          method: get
   list:
     handler: bin/list
     events:
       - http:
           path: vehicles
           method: get
+  create:
+    handler: bin/create
+    events:
+      - http:
+          path: vehicles
+          method: post
+  update:
+    handler: bin/update
+      - http:
+          path: vehicles/{vin}
+          method: put
+  delete:
+    handler: bin/delete
+      - http:
+          path: vehicles/{vin}
+          method: delete
+
+custom:
+  dynamodb:
+  # If you only want to use DynamoDB Local in some stages, declare them here
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      heapInitial: 200m
+      heapMax: 1g
+      migrate: true
+      seed: true
+      convertEmptyValues: true
+    # Uncomment only if you already have a DynamoDB running locally
+    # noStart: true
 
 resources:
   Resources:

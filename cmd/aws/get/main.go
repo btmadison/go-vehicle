@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -12,17 +13,20 @@ import (
 
 type response events.APIGatewayProxyResponse
 
-func Handler(ctx context.Context) (response, error) {
+func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (response, error) {
 	repo := dynamo.NewRepository()
 	svc := crud.NewService(repo)
 
-	vehicles, err := svc.ReadAll()
+	vin := request.PathParameters["vin"]
+
+	vehicle, err := svc.ReadOneByID(vin)
 	if err != nil {
+		fmt.Println(err)
 		return response{StatusCode: 404}, err
 	}
 
-	vehiclesJSON, _ := json.Marshal(vehicles)
-	return response{Body: string(vehiclesJSON), StatusCode: 200}, nil
+	vehicleJSON, _ := json.Marshal(vehicle)
+	return response{Body: string(vehicleJSON), StatusCode: 200}, nil
 }
 
 func main() {

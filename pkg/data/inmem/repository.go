@@ -40,13 +40,15 @@ func (m *Repository) GetOneByID(vin string) (crud.Vehicle, error) {
 }
 
 // Upsert will Insert or Update existing Vehicle in the inmem repo map
-func (m *Repository) Upsert(v crud.Vehicle) {
+func (m *Repository) Upsert(v crud.Vehicle) error {
 	m.vehicleMap[v.Vin] = v
+	return nil
 }
 
 // Delete vehicle from inmem repo map
-func (m *Repository) Delete(vin string) {
+func (m *Repository) Delete(vin string) error {
 	delete(m.vehicleMap, vin)
+	return nil
 }
 
 func populateSeedData(store *Repository) {
