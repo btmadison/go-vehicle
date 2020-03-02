@@ -1,6 +1,7 @@
 package rest_test
 
 import (
+	"bytes"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -34,7 +35,7 @@ func TestUnit_NonExistantRoute_Returns404(t *testing.T) {
 	}
 }
 
-func TestUnit_HandlerRestList_GetsAllVehiclesViaService(t *testing.T) {
+func TestUnit_HandlerRestList_GetsAllVehicles(t *testing.T) {
 	setupTestRoutes()
 	req, _ := http.NewRequest("GET", "http://localhost:8080/vehicles", nil)
 	resp := httptest.NewRecorder()
@@ -51,6 +52,39 @@ func TestUnit_HandlerRestList_GetsAllVehiclesViaService(t *testing.T) {
 
 	if vehicles[0].Vin != "TESTVEHICLEVIN1" {
 		t.Error("List Route failed to handle request")
+	}
+}
+
+func TestUnit_HandlerRestDelete(t *testing.T) {
+	setupTestRoutes()
+	req, _ := http.NewRequest("DELETE", "http://localhost:8080/vehicles/1234", nil)
+	resp := httptest.NewRecorder()
+	mRouter.ServeHTTP(resp, req)
+
+	if resp.Code != 200 {
+		t.Error("DELETE vehicles route failed")
+	}
+}
+
+func TestUnit_HandlerRestPut(t *testing.T) {
+	setupTestRoutes()
+	req, _ := http.NewRequest("PUT", "http://localhost:8080/vehicles/abc", bytes.NewBuffer([]byte(`{"Vin":"abc"}`)))
+	resp := httptest.NewRecorder()
+	mRouter.ServeHTTP(resp, req)
+
+	if resp.Code != 200 {
+		t.Error("PUT vehicles route failed")
+	}
+}
+
+func TestUnit_HandlerRestPost(t *testing.T) {
+	setupTestRoutes()
+	req, _ := http.NewRequest("POST", "http://localhost:8080/vehicles", bytes.NewBuffer([]byte(`{"Vin":"abc"}`)))
+	resp := httptest.NewRecorder()
+	mRouter.ServeHTTP(resp, req)
+
+	if resp.Code != 200 {
+		t.Error("POST vehicle route failed")
 	}
 }
 
