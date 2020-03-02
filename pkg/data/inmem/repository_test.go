@@ -8,7 +8,12 @@ import (
 
 func TestNewRepository_CreatesSeededRepo(t *testing.T) {
 	r := inmem.NewRepository()
-	if r == nil {
-		t.Error("shit")
+	vehicles, err := r.GetAllVehicles()
+	if err != nil {
+		t.Error(err)
+	}
+	count := len(vehicles)
+	if count != 5 {
+		t.Errorf("Should Seed with 5 fake vehicles, got %d instead", count)
 	}
 }
