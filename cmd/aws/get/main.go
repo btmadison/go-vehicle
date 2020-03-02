@@ -7,8 +7,8 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
-	"github.com/btmadison/btmadison/go-vehicle/pkg/data/dynamo"
+	"github.com/btmadison/go-vehicle/pkg/crud"
+	"github.com/btmadison/go-vehicle/pkg/data/dynamo"
 )
 
 type response events.APIGatewayProxyResponse

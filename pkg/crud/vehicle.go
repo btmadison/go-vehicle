@@ -8,17 +8,3 @@ type Vehicle struct {
 	Year       int    `json:"year"`
 	Dealership string `json:"dealership"`
 }
-
-// Vehicle type identified by unique vin number
-// type Vehicle struct {
-// 	// Vin        string `json:"vin"`
-// 	// Make       string `json:"make"`
-// 	// Model      string `json:"model"`
-// 	// Year       int    `json:"year"`
-// 	// Dealership string `json:"dealership"`
-// 	Vin        string
-// 	Make       string
-// 	Model      string
-// 	Year       int
-// 	Dealership string
-// }

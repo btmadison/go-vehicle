@@ -6,16 +6,12 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
+	"github.com/btmadison/go-vehicle/pkg/crud"
 )
 
 var svc crud.Service
 
-/*
-ServeRoutes serves the following routes as a single localhost api:
-/vehicles....
-blah blah blah
-*/
+// ServeRoutes serves the following routes as a single localhost api
 func ServeRoutes(vehicleSvc crud.Service) {
 	svc = vehicleSvc
 	router := mux.NewRouter()

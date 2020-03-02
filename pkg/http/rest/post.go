@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
+	"github.com/btmadison/go-vehicle/pkg/crud"
 )
 
 func post(w http.ResponseWriter, r *http.Request) {

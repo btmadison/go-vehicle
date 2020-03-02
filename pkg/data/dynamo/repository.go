@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 
-	"github.com/btmadison/btmadison/go-vehicle/pkg/crud"
+	"github.com/btmadison/go-vehicle/pkg/crud"
 )
 
 // Repository for dynamodb govehicle connection

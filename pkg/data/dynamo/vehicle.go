@@ -1,6 +1,6 @@
 package dynamo
 
-import "github.com/btmadison/btmadison/go-vehicle/pkg/crud"
+import "github.com/btmadison/go-vehicle/pkg/crud"
 
 // Vehicle Dyn Resp
 type Vehicle struct {
