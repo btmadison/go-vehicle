@@ -62,6 +62,39 @@ func TestUnit_SvcDelete_CallsRepoDelete(t *testing.T) {
 	}
 }
 
+func TestUnit_SvcDelete_CallsRepoDeleteRepoError(t *testing.T) {
+	mockRepository = mockRepo{}
+	svc := crud.NewService(mockRepository)
+	err := svc.Delete("THROW_ERR")
+	if err == nil {
+		t.Error("Should have returned an error")
+	}
+}
+
+func TestUnit_ServiceCreate_CallsRepoUpsert(t *testing.T) {
+	mockRepository = mockRepo{}
+	svc := crud.NewService(mockRepository)
+	v, err := svc.Create(crud.Vehicle{Vin: "FOO"})
+	if err != nil {
+		t.Error("create vehicle err")
+	}
+	if v.Vin != "FOO" {
+		t.Error("Failed to pass vehicle object to repo and handle repsonse")
+	}
+}
+
+func TestUnit_ServiceUpdate_CallsRepoUpsert_WhenRouteVinMatchesPayloadVin(t *testing.T) {
+	mockRepository = mockRepo{}
+	svc := crud.NewService(mockRepository)
+	v, err := svc.Update("foo_id", crud.Vehicle{Vin: "foo_id"})
+	if err != nil {
+		t.Error("error, should have called through to repo upsert")
+	}
+	if v.Vin != "foo_id" {
+		t.Error("Error on service update vehicle call to repo")
+	}
+}
+
 func (m mockRepo) GetAllVehicles() ([]crud.Vehicle, error) {
 	return []crud.Vehicle{{Vin: "MOCKVIN1"}}, nil
 }

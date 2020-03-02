@@ -37,13 +37,13 @@ func (svc *service) ReadOneByID(vin string) (Vehicle, error) {
 }
 
 func (svc service) Delete(vin string) error {
-	svc.repo.Delete(vin)
-	return nil
+	err := svc.repo.Delete(vin)
+	return err
 }
 
 func (svc service) Create(vehicle Vehicle) (Vehicle, error) {
-	svc.repo.Upsert(vehicle)
-	return vehicle, nil
+	err := svc.repo.Upsert(vehicle)
+	return vehicle, err
 }
 
 func (svc service) Update(vin string, vehicle Vehicle) (Vehicle, error) {
