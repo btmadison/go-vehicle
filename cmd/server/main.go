@@ -2,11 +2,13 @@ package main
 
 import (
 	"log"
+	"net/http"
 
 	"github.com/btmadison/go-vehicle/pkg/crud"
 	"github.com/btmadison/go-vehicle/pkg/data/dynamo"
 	"github.com/btmadison/go-vehicle/pkg/data/inmem"
 	"github.com/btmadison/go-vehicle/pkg/http/rest"
+	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
 
@@ -33,5 +35,7 @@ func main() {
 		panic("INVALID DATA SOURCE")
 	}
 
-	rest.ServeRoutes(svc)
+	router := mux.NewRouter()
+	rest.RegisterRoutes(router, svc)
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
