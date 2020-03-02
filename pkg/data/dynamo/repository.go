@@ -32,18 +32,15 @@ func NewRepository() *Repository {
 // GetAllVehicles gets all vehicles
 func (m *Repository) GetAllVehicles() ([]crud.Vehicle, error) {
 	dyn := newDynSession(m)
-	fmt.Println(dyn)
 
 	params := &dynamodb.ScanInput{
 		TableName: aws.String(m.tableName),
 	}
-	fmt.Println(params)
 
 	result, err := dyn.Scan(params)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(result)
 
 	return mapResultsToVehicles(result.Items)
 }
@@ -108,12 +105,25 @@ func (m *Repository) Upsert(v crud.Vehicle) error {
 	}
 
 	return nil
-
 }
 
-// Delete vehicle from in memory inventory
+// Delete vehicle from dynamodb
 func (m *Repository) Delete(vin string) error {
-	return nil
+	dyn := newDynSession(m)
+	input := &dynamodb.DeleteItemInput{
+		Key: map[string]*dynamodb.AttributeValue{
+			"pk": {
+				S: aws.String(vin),
+			},
+			"sk": {
+				S: aws.String("metadata"),
+			},
+		},
+		TableName: aws.String(m.tableName),
+	}
+
+	_, err := dyn.DeleteItem(input)
+	return err
 }
 
 func newDynSession(m *Repository) *dynamodb.DynamoDB {
