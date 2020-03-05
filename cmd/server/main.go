@@ -18,22 +18,20 @@ const (
 )
 
 func main() {
-	err := godotenv.Load("local.env")
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
+	godotenv.Load("local.env")
 	var svc crud.Service
+	var repo crud.Repository
 
 	switch db := DYNAMO; db {
 	case DYNAMO:
-		repo := dynamo.NewRepository()
-		svc = crud.NewService(repo)
+		repo = dynamo.NewRepository()
 	case INMEM:
-		repo := inmem.NewRepository()
-		svc = crud.NewService(repo)
+		repo = inmem.NewRepository()
 	default:
 		panic("INVALID DATA SOURCE")
 	}
+
+	svc = crud.NewService(repo)
 
 	router := mux.NewRouter()
 	rest.RegisterRoutes(router, svc)
